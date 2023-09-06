@@ -1,0 +1,25 @@
+Private Sub Worksheet_SelectionChange(ByVal Target As Range)
+    ' To mau hang cot phien ban 1
+    Static PreviousCell As Range
+    Dim CurrentCell As Range
+    
+    ' Kiem tra neu co o truoc do duoc chon
+    If Not PreviousCell Is Nothing Then
+        ' Xoa mau cua hang va cot tren o truoc do
+        PreviousCell.EntireRow.Interior.ColorIndex = xlNone
+        PreviousCell.EntireColumn.Interior.ColorIndex = xlNone
+    End If
+    
+    ' Luu o hien tai vao bien CurrentCell
+    Set CurrentCell = Target
+    
+    ' Kiem tra xem co o nao duoc chon khong
+    If Not CurrentCell Is Nothing Then
+        ' To mau hang va cot tren o dang chon
+        CurrentCell.EntireRow.Interior.Color = RGB(255, 255, 0) ' Mau vang
+        CurrentCell.EntireColumn.Interior.Color = RGB(255, 255, 0) ' Mau vang
+        
+        ' Luu o hien tai vao bien PreviousCell de de dang xoa mau khi chon o khac
+        Set PreviousCell = CurrentCell
+    End If
+End Sub
