@@ -1,0 +1,46 @@
+Private Sub Worksheet_SelectionChange(ByVal Target As Range)
+' Neu o da duoc to mau thi ma VBA khong tac dong len khu vuc do
+    Static PreviousCell As Range
+    Dim CurrentCell As Range
+    Static StartTime As Double
+    Static ManualColoring As Boolean
+    
+    ' Kiem tra neu co o truoc do duoc chon
+    If Not PreviousCell Is Nothing And Not ManualColoring Then
+        ' Xoa mau cua hang va cot tren o truoc do
+        PreviousCell.EntireRow.Interior.ColorIndex = xlNone
+        PreviousCell.EntireColumn.Interior.ColorIndex = xlNone
+    End If
+    
+    ' Luu o hien tai vao bien CurrentCell
+    Set CurrentCell = Target
+    
+    ' Kiem tra xem co o nao duoc chon khong
+    If Not CurrentCell Is Nothing Then
+        ' Kiem tra xem o hien tai da duoc to mau thu cong hay khong
+        If CurrentCell.EntireRow.Interior.ColorIndex = xlNone And CurrentCell.EntireColumn.Interior.ColorIndex = xlNone Then
+            ' To mau hang va cot tren o dang chon
+            CurrentCell.EntireRow.Interior.Color = RGB(255, 255, 0) ' Mau vang
+            CurrentCell.EntireColumn.Interior.Color = RGB(255, 255, 0) ' Mau vang
+            ' Dat bien ManualColoring thanh False de xoa mau theo ma VBA
+            ManualColoring = False
+        Else
+            ' Dat bien ManualColoring thanh True de bao ve mau da duoc to thu cong
+            ManualColoring = True
+        End If
+        
+        ' Luu o hien tai vao bien PreviousCell de de dang xoa mau khi chon o khac
+        Set PreviousCell = CurrentCell
+        
+        ' Luu thoi diem bat dau thoi gian dem
+        StartTime = Timer
+    End If
+    
+    ' Kiem tra neu da troi qua 3 giay va khong phai to mau thu cong, thi xoa mau
+    If Timer >= StartTime + 3 And Not ManualColoring Then
+        If Not PreviousCell Is Nothing Then
+            PreviousCell.EntireRow.Interior.ColorIndex = xlNone
+            PreviousCell.EntireColumn.Interior.ColorIndex = xlNone
+        End If
+    End If
+End Sub
