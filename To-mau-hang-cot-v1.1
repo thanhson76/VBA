@@ -1,0 +1,15 @@
+Private Sub Worksheet_SelectionChange(ByVal Target As Range)
+' Phiên bản 1.1 - Đặt thời gian kết thúc tô màu sau 3s
+    Application.ScreenUpdating = False
+    With Target
+        .Worksheet.Cells.Interior.ColorIndex = 0
+        .EntireRow.Interior.Color = vbYellow
+        .EntireColumn.Interior.Color = vbYellow
+        .Interior.Color = xlNone ' Ð?t màu n?n c?a ô du?c ch?n thành màu m?c d?nh
+    End With
+
+    ' Đặt thời gian kết thúc tô màu sau 3s
+    TimerEndTime = Now + TimeValue("00:00:03")
+    Application.OnTime TimerEndTime, "ResetColors"
+    Application.ScreenUpdating = True
+End Sub
