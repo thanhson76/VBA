@@ -36,11 +36,4 @@ Private Sub Worksheet_SelectionChange(ByVal Target As Range)
         StartTime = Timer
     End If
     
-    ' Kiem tra neu da troi qua 3 giay va khong phai to mau thu cong, thi xoa mau
-    If Timer >= StartTime + 3 And Not ManualColoring Then
-        If Not PreviousCell Is Nothing Then
-            PreviousCell.EntireRow.Interior.ColorIndex = xlNone
-            PreviousCell.EntireColumn.Interior.ColorIndex = xlNone
-        End If
-    End If
 End Sub
