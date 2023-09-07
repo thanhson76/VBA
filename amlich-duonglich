@@ -1,0 +1,284 @@
+'Tham khao dua tren source code cua Ho Ngoc Duc
+'@gaixixon@gmail.com
+Option Explicit
+Const PI As Double = 3.14159265358979 ' Atn(1) * 4
+
+' Compute the (integral) Julian day number of day dd/mm/yyyy, i.e., the number
+' of days between 1/1/4713 BC (Julian calendar) and dd/mm/yyyy.
+' Formula from http://www.tondering.dk/claus/calendar.html
+Private Function jdFromDate(ByVal dd As Long, ByVal mm As Long, ByVal yy As Long) As Long
+    Dim a As Double, y As Long, m As Long, jd As Long
+    a = Fix((14 - mm) / 12)
+    y = yy + 4800 - a
+    m = mm + 12 * a - 3
+    jd = dd + Fix((153 * m + 2) / 5) + 365 * y _
+        + Fix(y / 4) - Fix(y / 100) + Fix(y / 400) - 32045
+    If jd < 2299161 Then
+        jd = dd + Fix((153 * m + 2) / 5) + 365 * y + Fix(y / 4) - 32083
+    End If
+    jdFromDate = jd
+End Function
+
+' Convert a Julian day number to day/month/year. Parameter jd is an integer
+Private Function jdToDate(ByVal jd As Long)
+    Dim a As Long, b As Long, c As Long, d As Long, e As Long, m As Long
+    Dim Day As Long, Month As Long, Year As Long
+    If (jd > 2299160) Then ' After 5/10/1582, Gregorian calendar
+        a = jd + 32044
+        b = Fix((4 * a + 3) / 146097)
+        c = a - Fix((b * 146097) / 4)
+    Else
+        b = 0
+        c = jd + 32082
+    End If
+    d = Fix((4 * c + 3) / 1461)
+    e = c - Fix((1461 * d) / 4)
+    m = Fix((5 * e + 2) / 153)
+    Day = e - Fix((153 * m + 2) / 5) + 1
+    Month = m + 3 - 12 * Fix(m / 10)
+    Year = b * 100 + d - 4800 + Fix(m / 10)
+    jdToDate = Array(Day, Month, Year)
+End Function
+
+' Compute the time of the k-th new moon after the new moon of 1/1/1900 13:52 UCT
+' (measured as the number of days since 1/1/4713 BC noon UCT,
+' e.g., 2451545.125 is 1/1/2000 15:00 UTC).
+' Returns a floating number, e.g.,
+' 2415079.9758617813 for k=2 or 2414961.935157746 for k=-2
+
+Private Function NewMoon(ByVal k As Long) As Double
+    Dim T As Double, T2 As Double, T3 As Double, dr As Double
+    Dim Jd1 As Double, m As Double, Mpr As Double
+    Dim f As Double, C1 As Double, deltat As Double, JdNew As Double
+    T = k / 1236.85 ' Time in Julian centuries from 1900 January 0.5
+    T2 = T * T
+    T3 = T2 * T
+    dr = PI / 180
+    Jd1 = 2415020.75933 + 29.53058868 * k + 0.0001178 * T2 - 0.000000155 * T3
+    Jd1 = Jd1 + 0.00033 * Sin((166.56 + 132.87 * T - 0.009173 * T2) * dr)
+        ' Mean new moon
+    m = 359.2242 + 29.10535608 * k - 0.0000333 * T2 - 0.00000347 * T3
+        ' Sun's mean anomaly
+    Mpr = 306.0253 + 385.81691806 * k + 0.0107306 * T2 + 0.00001236 * T3
+        ' Moon's mean anomaly
+    f = 21.2964 + 390.67050646 * k - 0.0016528 * T2 - 0.00000239 * T3
+        ' Moon's argument of latitude
+    C1 = (0.1734 - 0.000393 * T) * Sin(m * dr) + 0.0021 * Sin(2 * dr * m)
+    C1 = C1 - 0.4068 * Sin(Mpr * dr) + 0.0161 * Sin(dr * 2 * Mpr)
+    C1 = C1 - 0.0004 * Sin(dr * 3 * Mpr)
+    C1 = C1 + 0.0104 * Sin(dr * 2 * f) - 0.0051 * Sin(dr * (m + Mpr))
+    C1 = C1 - 0.0074 * Sin(dr * (m - Mpr)) + 0.0004 * Sin(dr * (2 * f + m))
+    C1 = C1 - 0.0004 * Sin(dr * (2 * f - m)) - 0.0006 * Sin(dr * (2 * f + Mpr))
+    C1 = C1 + 0.001 * Sin(dr * (2 * f - Mpr)) + 0.0005 * Sin(dr * (2 * Mpr + m))
+    If (T < -11) Then
+        deltat = 0.001 + 0.000839 * T + 0.0002261 * T2 _
+                - 0.00000845 * T3 - 0.000000081 * T * T3
+    Else
+        deltat = -0.000278 + 0.000265 * T + 0.000262 * T2
+    End If
+    JdNew = Jd1 + C1 - deltat
+    NewMoon = JdNew
+End Function
+
+' Compute the longitude of the sun at any time.
+' Parameter: floating number jdn, the number of days since 1/1/4713 BC noon
+
+Private Function SunLongitude(ByVal jdn As Double) As Double
+    Dim T As Double, T2 As Double, dr As Double, m As Double
+    Dim L0 As Double, DL As Double, L As Double
+    T = (jdn - 2451545) / 36525
+        ' Time in Julian centuries from 2000-01-01 12:00:00 GMT
+    T2 = T * T
+    dr = PI / 180 ' degree to radian
+    m = 357.5291 + 35999.0503 * T - 0.0001559 * T2 - 0.00000048 * T * T2
+        ' mean anomaly, degree
+    L0 = 280.46645 + 36000.76983 * T + 0.0003032 * T2
+        ' mean longitude, degree
+    DL = (1.9146 - 0.004817 * T - 0.000014 * T2) * Sin(dr * m)
+    DL = DL + (0.019993 - 0.000101 * T) * Sin(dr * 2 * m) _
+        + 0.00029 * Sin(dr * 3 * m)
+    L = L0 + DL ' true longitude, degree
+    L = L * dr
+    L = L - PI * 2 * (Fix(L / (PI * 2))) ' Normalize to (0, 2*PI)
+    SunLongitude = L
+End Function
+
+' Compute sun position at midnight of the day with the given Julian day number.
+' The time zone if the time difference between local time and UTC: 7.0 for UTC+7:00.
+' The function returns a number between 0 and 11.
+' From the day after March equinox and the 1st major term after March equinox,
+' 0 is returned. After that, return 1, 2, 3 ...
+Private Function getSunLongitude(ByVal dayNumber As Double, ByVal timeZone As Byte) As Long
+    getSunLongitude = Fix(SunLongitude(dayNumber - 0.5 - timeZone / 24) / PI * 6)
+End Function
+
+' Compute the day of the k-th new moon in the given time zone.
+' The time zone if the time difference between local time and UTC: 7.0 for UTC+7:00
+Private Function getNewMoonDay(ByVal k As Long, ByVal timeZone As Long) As Long
+    getNewMoonDay = Fix(NewMoon(k) + 0.5 + timeZone / 24)
+End Function
+
+' Find the day that starts the luner month 11 of the given year
+' for the given time zone
+Private Function getLunarMonth11(ByVal yy As Long, ByVal timeZone As Long) As Long
+    Dim k As Long, off As Double, nm As Long, sunLong As Double
+    '' off = jdFromDate(31, 12, yy) - 2415021.076998695
+    off = jdFromDate(31, 12, yy) - 2415021
+    k = Fix(off / 29.530588853)
+    nm = getNewMoonDay(k, timeZone)
+    sunLong = getSunLongitude(nm, timeZone) ' sun longitude at local midnight
+    If (sunLong >= 9) Then
+        nm = getNewMoonDay(k - 1, timeZone)
+    End If
+    getLunarMonth11 = nm
+End Function
+
+' Find the index of the leap month after the month starting on the day a11.
+Private Function getLeapMonthOffset(ByVal a11 As Double, ByVal timeZone As Long) As Long
+    Dim k As Long, last As Long, Arc As Long, I As Long
+    k = Fix((a11 - 2415021.07699869) / 29.530588853 + 0.5)
+    last = 0
+    I = 1 ' We start with the month following lunar month 11
+    Arc = getSunLongitude(getNewMoonDay(k + I, timeZone), timeZone)
+    Do
+        last = Arc
+        I = I + 1
+        Arc = getSunLongitude(getNewMoonDay(k + I, timeZone), timeZone)
+    Loop While (Arc <> last And I < 14)
+    getLeapMonthOffset = I - 1
+End Function
+
+
+' Comvert solar date dd/mm/yyyy to the corresponding lunar date
+Function amlich(Optional ByVal ngay As String) As Date
+    If ngay = "" Then ngay = Date
+    Dim dd, mm, yy, timeZone As Long
+    dd = Day(ngay)
+    mm = Month(ngay)
+    yy = Year(ngay)
+    timeZone = 7
+    Dim k As Long, diff As Long, leapMonthDiff As Long, dayNumber As Long
+    Dim monthStart As Double, a11 As Long, b11 As Long
+    Dim lunarDay As Double, lunarMonth As Long, lunarYear As Long, lunarLeap As Long
+    '~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    If yy = 0 Then yy = Year(Date)
+    dayNumber = jdFromDate(dd, mm, yy)
+    k = Fix((dayNumber - 2415021.07699869) / 29.530588853)
+    monthStart = getNewMoonDay(k + 1, timeZone)
+    If (monthStart > dayNumber) Then
+        monthStart = getNewMoonDay(k, timeZone)
+    End If
+    ' alert(dayNumber + " -> " + monthStart)
+    a11 = getLunarMonth11(yy, timeZone)
+    b11 = a11
+    If (a11 >= monthStart) Then
+        lunarYear = yy
+        a11 = getLunarMonth11(yy - 1, timeZone)
+    Else
+        lunarYear = yy + 1
+        b11 = getLunarMonth11(yy + 1, timeZone)
+    End If
+    lunarDay = dayNumber - monthStart + 1
+    diff = Fix((monthStart - a11) / 29)
+    lunarLeap = 0
+    lunarMonth = diff + 11
+    If (b11 - a11 > 365) Then
+        leapMonthDiff = getLeapMonthOffset(a11, timeZone)
+        If (diff >= leapMonthDiff) Then
+            lunarMonth = diff + 10
+            If (diff = leapMonthDiff) Then lunarLeap = 1
+        End If
+    End If
+    If (lunarMonth > 12) Then lunarMonth = lunarMonth - 12
+    If (lunarMonth >= 11 And diff < 4) Then lunarYear = lunarYear - 1
+'    amlich = Format(lunarDay, "00") & _
+                "/" & Format(lunarMonth, "00") & _
+                "/" & Format(lunarYear, "0000 \A\L") & IIf(lunarLeap, " (" & lunarMonth & " N)", "")
+    
+    'amlich = Format(DateSerial(lunarYear, lunarMonth, lunarDay), "dd/mm/yyyy")
+    amlich = DateSerial(lunarYear, lunarMonth, lunarDay)
+    'amlich = lunarMonth & "/" & lunarDay & "/" & lunarYear
+     
+End Function
+
+' Convert a lunar date to the corresponding solar date
+Function duonglich(ByVal ngay As Date) As Date
+        Dim lunarDay, lunarMonth, lunarYear, lunarLeap, timeZone As Long
+        timeZone = 7
+        lunarDay = Day(ngay)
+        lunarMonth = Month(ngay)
+        lunarYear = Year(ngay)
+        lunarLeap = 0
+'Function duonglich( _
+        ByVal lunarDay As Long, _
+        ByVal lunarMonth As Long, _
+        Optional ByVal lunarYear As Long = 0, _
+        Optional ByVal lunarLeap As Long = 0, _
+        Optional ByVal timeZone As Long = 7) As Date
+    Dim k As Long, a11 As Long, b11 As Long, off As Long, leapOff As Long
+    Dim LeapMonth As Long, monthStart As Long
+    '~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    
+    If (lunarMonth < 11) Then
+        a11 = getLunarMonth11(lunarYear - 1, timeZone)
+        b11 = getLunarMonth11(lunarYear, timeZone)
+    Else
+        a11 = getLunarMonth11(lunarYear, timeZone)
+        b11 = getLunarMonth11(lunarYear + 1, timeZone)
+    End If
+    k = Fix(0.5 + (a11 - 2415021.07699869) / 29.530588853)
+    off = lunarMonth - 11
+    If (off < 0) Then off = off + 12
+    If (b11 - a11 > 365) Then
+        leapOff = getLeapMonthOffset(a11, timeZone)
+        LeapMonth = leapOff - 2
+        If (LeapMonth < 0) Then LeapMonth = LeapMonth + 12
+        If (lunarLeap <> 0 And lunarMonth <> LeapMonth) Then
+            duonglich = Array(0, 0, 0)
+            Exit Function
+        ElseIf (lunarLeap <> 0 Or off >= leapOff) Then
+            off = off + 1
+        End If
+    End If
+    monthStart = getNewMoonDay(k + off, timeZone)
+    Dim R
+    R = jdToDate(monthStart + lunarDay - 1)
+    duonglich = R(0) & "/" & R(1) & "/" & R(2)
+    
+End Function
+
+Function docngay(ngay As Date, Optional ByVal kc As Integer = 0) As String
+Dim dd, mm, yy, zz As String
+dd = Day(ngay)
+mm = Month(ngay)
+yy = Year(ngay)
+zz = Weekday(ngay, vbSunday)
+
+Select Case zz
+    Case 1
+        zz = "Ch" & ChrW$(&H1EE7) & " nh" & ChrW$(&H1EAD) & "t, "
+    Case 2
+        zz = "Th" & ChrW$(&H1EE9) & " hai, "
+    Case 3
+        zz = "Th" & ChrW$(&H1EE9) & " ba, "
+    Case 4
+        zz = "Th" & ChrW$(&H1EE9) & " t" & ChrW("&H01B0") & ", "
+    Case 5
+        zz = "Th" & ChrW$(&H1EE9) & " n" & ChrW("&H103") & "m, "
+    Case 6
+        zz = "Th" & ChrW$(&H1EE9) & " s" & ChrW("&HE1") & "u, "
+    Case 7
+        zz = "Th" & ChrW$(&H1EE9) & " b" & ChrW("&H1EA3") & "y, "
+End Select
+    
+If kc = 1 Then
+    docngay = "Ng" & ChrW$(&HE0) & "y " & dd & " th" & ChrW$(&HE1) & "ng " & mm & " n" & ChrW$(&H103) & "m " & yy
+ElseIf kc = 2 Then
+    docngay = zz & "ng" & ChrW$(&HE0) & "y " & dd & " th" & ChrW$(&HE1) & "ng " & mm & " n" & ChrW$(&H103) & "m " & yy
+ElseIf kc = 3 Then
+    Dim canY As Long
+Else
+    docngay = Format(ngay, "dd/mm/yy")
+End If
+
+End Function
