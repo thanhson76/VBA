@@ -1,0 +1,28 @@
+'Function TwoDLookup(lookup_row As Variant, lookup_col As Variant, tableArray As Range) As Variant
+'    Dim rowIndex As Long
+'    Dim colIndex As Long
+'    rowIndex = Application.Match(lookup_row, tableArray.Columns(1), 0)
+'    colIndex = Application.Match(lookup_col, tableArray.Rows(1), 0)
+'    TwoDLookup = tableArray.Cells(rowIndex, colIndex)
+'End Function
+'
+Function DLookup(lookup_row As Variant, lookup_col As Variant, tableArray As Range) As Variant
+' lookup_row là hàng
+' lookup_col là cột
+    Dim rowIndex As Variant
+    Dim colIndex As Variant
+    
+    ' Su dung Application.Match de tìm rowIndex và colIndex
+    On Error Resume Next
+    rowIndex = Application.Match(lookup_row, tableArray.Columns(1), 0)
+    colIndex = Application.Match(lookup_col, tableArray.Rows(1), 0)
+    On Error GoTo 0
+    
+    ' Kiem tra neu không tìm thay giá tri
+    If IsError(rowIndex) Or IsError(colIndex) Then
+        DLookup = "Không tìm th" & ChrW(7845) & "y k" & ChrW(7871) & "t qu" & ChrW(7843) & ""
+    Else
+        ' Su dung Cells de truy xuat giá tri
+        DLookup = tableArray.Cells(rowIndex, colIndex).Value
+    End If
+End Function
