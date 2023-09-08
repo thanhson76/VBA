@@ -1,0 +1,70 @@
+'Can chi ngày, tháng, năm
+Option Explicit
+Function CanYear(nam As Long)
+Dim Mg()
+Mg = Array("Canh", "Tân", "Nhâm", "Quý", "Giáp", "" & ChrW(7844) & "t", "Bính", "" & ChrW(272) & "inh", "M" & ChrW(7853) & "u", "K" & ChrW(7927) & "")
+CanYear = Mg(nam Mod 10)
+End Function
+
+Function ChiYear(nam As Long)
+
+Dim Mg()
+Mg = Array("Thân", "D" & ChrW(7853) & "u", "Tu" & ChrW(7845) & "t", "H" & ChrW(7907) & "i", "Tí", "S" & ChrW(7917) & "u", "D" & ChrW(7847) & "n", "Mão", "Thìn", "T" & ChrW(7925) & "", "Ng" & ChrW(7885) & "", "Mùi")
+ChiYear = Mg(nam Mod 12)
+End Function
+Function Canday(ngay As Date)
+Dim Mg()
+Dim tam
+tam = DateSerial(Year(ngay), Month(ngay), Day(ngay))
+Mg = Array("Nhâm", "Quý", "Giáp", "" & ChrW(7844) & "t", "Bính", "" & ChrW(272) & "inh", "M" & ChrW(7853) & "u", "K" & ChrW(7927) & "", "Canh", "Tân")
+Canday = Mg(tam Mod 10)
+End Function
+Function Chiday(ngay As Long)
+Dim Mg()
+Dim tam
+tam = DateSerial(Year(ngay), Month(ngay), Day(ngay))
+Mg = Array("Thân", "D" & ChrW(7853) & "u", "Tu" & ChrW(7845) & "t", "H" & ChrW(7907) & "i", "Tí", "S" & ChrW(7917) & "u", "D" & ChrW(7847) & "n", "Mão", "Thìn", "T" & ChrW(7925) & "", "Ng" & ChrW(7885) & "", "Mùi")
+Chiday = Mg(tam Mod 12)
+End Function
+Function canchinam(ByVal cell As Range) As String
+    Dim yearValue As Integer
+    Dim canchi As String
+    
+    ' L?y nam t? ô d?u vào
+    yearValue = Year(cell.Value)
+    
+    ' Tính giá tr? CanChi d?a trên nam
+    canchi = "@canyear(" & yearValue & ") & "" "" & @chiyear(" & yearValue & ")"
+    
+    ' Tr? v? giá tr? CanChi
+    canchinam = "N" & ChrW(259) & "m " & Evaluate(canchi)
+End Function
+Function canchingay(rng As Range) As String
+    Dim result As String
+    
+    ' L?y giá tr? CanDay và ChiDay t? ô d?u vào
+    Dim candayValue As String
+    Dim chidayValue As String
+    
+    candayValue = rng.Worksheet.Evaluate("@canday(" & rng.Address & ")")
+    chidayValue = rng.Worksheet.Evaluate("@chiday(" & rng.Address & ")")
+    
+    ' K?t h?p giá tr? CanDay và ChiDay thành m?t chu?i k?t qu?
+    result = candayValue & " " & chidayValue
+    
+    ' Tr? v? k?t qu?
+    canchingay = "Ngày " & result
+End Function
+
+Function Canchithang(ngay As Range) As String
+    Dim result As String
+    Dim Mg()
+    Mg = Array("Giáp Tí", "" & ChrW(7844) & "t S" & ChrW(7917) & "u", "Bính D" & ChrW(7847) & "n", "" & ChrW(272) & "inh Mão", "M" & ChrW(7853) & "u Thìn", "K" & ChrW(7927) & " T" & ChrW(7925) & "", "Canh Ng" & ChrW(7885) & "", "Tân Mùi", "Nhâm Thân", "Quý D" & ChrW(7853) & "u", "Giáp Tu" & ChrW(7845) & "t", "" & ChrW(7844) & "t H" & ChrW(7907) & "i")
+    Dim monthValue As Long
+
+    ' L?y giá tr? tháng t? ô d?u vào
+    monthValue = Month(ngay.Value)
+
+    result = Mg((monthValue - 1) Mod 12)
+    Canchithang = "Tháng " & result
+End Function
