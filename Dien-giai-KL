@@ -1,0 +1,86 @@
+Option Explicit
+'Qui uoc dau ":" dau tien dung de chu thich, cac dau ":" sau do la phep chia "/"
+Private Sub Worksheet_Change(ByVal Target As Range)
+    Dim sDienGiai As String, sCongThuc As String, sKyTu As String, sTbao As String
+    Dim i As Long, LenDG As Long, ViTri As Long
+     
+    If Target.Column <> 4 Or Target.Row < 6 Then Exit Sub
+    sDienGiai = Trim(Target.Formula)
+    LenDG = Len(sDienGiai)
+    If LenDG = 0 Then
+        Target.Offset(0, 1).FormulaR1C1 = ""
+        Exit Sub
+    End If
+     
+    '==> Tim Vi tri cua dau ":" trong Dien giai. Lay phan phia sau.
+    ViTri = InStr(1, sDienGiai, ":")
+    sDienGiai = Trim(Right$(sDienGiai, LenDG - ViTri))
+     
+    On Error GoTo BaoLoi
+    sDienGiai = Replace(sDienGiai, " ", "")    'Xoa het cac ky tu trang
+    sDienGiai = Replace(sDienGiai, "x", "*")    'Thay dau nhan
+    sDienGiai = Replace(sDienGiai, "X", "*")    'Thay dau nhan
+    sDienGiai = Replace(sDienGiai, ":", "/")    'Thay dau chia
+    sDienGiai = Replace(sDienGiai, ",", ".")        'Sua so thap phan
+     ' ==> Tinh lai chieu dai cua sDienGiai. Bat dau Tinh Khoi Luong
+    LenDG = Len(sDienGiai)   For i = 1 To LenDG
+        sKyTu = Mid$(sDienGiai, i, 1)
+       Select Case sKyTu
+        Case Is = "(", ")", ".", "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "+", "-", "*", "%", "^"
+            sCongThuc = sCongThuc & sKyTu
+         
+        Case Is = "/"
+            If i = LenDG Then GoTo BaoLoi       ' Chia cho cai gi?
+            If IsNumeric(Mid$(sDienGiai, i - 1, 1)) Then  ' Neu truoc dau "/" la So
+                If IsNumeric(Mid$(sDienGiai, i + 1, 1)) Then
+                    ' Sau dau "/" la So ==> So chia cho So
+                    sCongThuc = sCongThuc & Mid$(sDienGiai, i, 2)
+                    i = i + 1           'Vi da lay 2 ky tu roi
+                Else
+                    '==> So chia cho Chu
+                    sTbao = "So khong the chia cho Chu duoc (" _
+                        & Mid$(sDienGiai, i - 1, 1) & "/" & Mid$(sDienGiai, i + 1, 1) & "???)"
+                    GoTo BaoLoi
+                End If
+            End If
+         
+        Case Is = "m"
+            '==>  Neu m va 2 chu so nua la Sai cong thuc
+            If i <= LenDG - 2 And IsNumeric(Mid$(sDienGiai, i + 1, 1)) And IsNumeric(Mid$(sDienGiai, i + 2, 1)) Then
+                sTbao = "Khong co thu nguyen la m" & Mid$(sDienGiai, i + 1, 2)
+                GoTo BaoLoi
+            ElseIf i <= LenDG - 2 And Mid$(sDienGiai, i + 1, 1) = "/" And IsNumeric(Mid$(sDienGiai, i + 2, 1)) Then
+                sCongThuc = sCongThuc & Mid$(sDienGiai, i + 1, 2)
+                i = i + 2           'Vi da bo "m" va lay them 2 ky tu roi
+            Else
+                '==>  Neu m0 hoac m1 hoac m4 ... la Sai cong thuc
+                If IsNumeric(Mid$(sDienGiai, i + 1, 1)) Then
+                    If Int(Mid$(sDienGiai, i + 1, 1)) < 2 Or Int(Mid$(sDienGiai, i + 1, 1)) > 3 Then
+                        sTbao = "Khong co thu nguyen la m" & Mid$(sDienGiai, i + 1, 1)
+                        GoTo BaoLoi
+                    Else
+                        i = i + 1   '==>  Bo qua ca m2 hoac m3
+                    End If
+                End If
+            End If
+             
+        Case Is = "S", "s"
+            '==>  Neu la Can bac hai
+            If LenDG - i >= 6 Then      ' it nhat la cong thuc SQRT(n)
+                If UCase$(Mid$(sDienGiai, i, 4)) = "SQRT" Then
+                    sCongThuc = sCongThuc & "SQRT"
+                    i = i + 3   'Da lay SQRT vao cong thuc
+                End If
+            End If
+        End Select
+    Next i
+     
+    With Target.Offset(0, 1)
+        If sCongThuc = vbNullString Then .FormulaR1C1 = "" Else .FormulaR1C1 = "=" & sCongThuc
+    End With
+    Exit Sub
+ 
+BaoLoi:
+    Target.Offset(0, 1).FormulaR1C1 = "Sai Dien giai"
+    MsgBox "Nhap Dien giai sai kieu! " & Chr(13) & sTbao, vbCritical
+End Sub
