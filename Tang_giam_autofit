@@ -1,0 +1,15 @@
+Sub Btn_Tang()
+Range("AB2") = Range("AB2") + 1
+Call autofitRow
+End Sub
+
+Sub Btn_Giam()
+Range("AB2") = Range("AB2") - 1
+Call autofitRow
+End Sub
+
+Sub autofitRow()
+' Chọn ô tự động giãn dòng
+Range("A12").EntireRow.AutoFit
+Range("A14").EntireRow.AutoFit
+End Sub
