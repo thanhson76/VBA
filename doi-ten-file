@@ -13,72 +13,19 @@ Sub Batdau()
 '
 
 '
-    ActiveSheet.Shapes.AddShape(msoShapeRoundedRectangle, 520.75, 153.75, 96.75, _
-        25.5).Select
-    Selection.ShapeRange(1).TextFrame2.TextRange.Characters.Text = "Get File name"
-    With Selection.ShapeRange(1).TextFrame2.TextRange.Characters(1, 13). _
-        ParagraphFormat
-        .FirstLineIndent = 0
-        .Alignment = msoAlignLeft
-    End With
-    With Selection.ShapeRange(1).TextFrame2.TextRange.Characters(1, 13).Font
-        .NameComplexScript = "+mn-cs"
-        .NameFarEast = "+mn-ea"
-        .Fill.Visible = msoTrue
-        .Fill.ForeColor.ObjectThemeColor = msoThemeColorLight1
-        .Fill.ForeColor.TintAndShade = 0
-        .Fill.ForeColor.Brightness = 0
-        .Fill.Transparency = 0
-        .Fill.Solid
-        .Size = 11
-        .Name = "+mn-lt"
-    End With
+    ActiveSheet.Shapes.AddShape(msoShapeRoundedRectangle, 400, 100, 100, _
+        25).Select
+    Selection.ShapeRange(1).TextFrame2.TextRange.Characters.Text = "Ch" & ChrW(7885) & "n th" & ChrW(432) & " m" & ChrW(7909) & "c"
     Selection.OnAction = "Getfile"
-    ActiveSheet.Shapes.AddShape(msoShapeRoundedRectangle, 520.75, 191.25, 95.75, _
-        24.75).Select
-    Selection.ShapeRange(1).TextFrame2.TextRange.Characters.Text = "Rename"
-    With Selection.ShapeRange(1).TextFrame2.TextRange.Characters(1, 6). _
-        ParagraphFormat
-        .FirstLineIndent = 0
-        .Alignment = msoAlignCenter
-    End With
-    With Selection.ShapeRange(1).TextFrame2.TextRange.Characters(1, 6).Font
-        .NameComplexScript = "+mn-cs"
-        .NameFarEast = "+mn-ea"
-        .Fill.Visible = msoTrue
-        .Fill.ForeColor.ObjectThemeColor = msoThemeColorLight1
-        .Fill.ForeColor.TintAndShade = 0
-        .Fill.ForeColor.Brightness = 0
-        .Fill.Transparency = 0
-        .Fill.Solid
-        .Size = 11
-        .Name = "+mn-lt"
-    End With
-    Selection.OnAction = "Rename"
-    ActiveSheet.Shapes.AddShape(msoShapeRoundedRectangle, 520.75, 228.75, 95.75, _
-        22.5).Select
-    Selection.ShapeRange(1).TextFrame2.TextRange.Characters.Text = "Clear"
-    With Selection.ShapeRange(1).TextFrame2.TextRange.Characters(1, 5). _
-        ParagraphFormat
-        .FirstLineIndent = 0
-        .Alignment = msoAlignLeft
-    End With
-    With Selection.ShapeRange(1).TextFrame2.TextRange.Characters(1, 5).Font
-        .NameComplexScript = "+mn-cs"
-        .NameFarEast = "+mn-ea"
-        .Fill.Visible = msoTrue
-        .Fill.ForeColor.ObjectThemeColor = msoThemeColorLight1
-        .Fill.ForeColor.TintAndShade = 0
-        .Fill.ForeColor.Brightness = 0
-        .Fill.Transparency = 0
-        .Fill.Solid
-        .Size = 11
-        .Name = "+mn-lt"
-    End With
-    Selection.ShapeRange.TextFrame2.TextRange.ParagraphFormat.Alignment = _
-        msoAlignCenter
-    Selection.OnAction = "Clear"
-    Range("I18").Select
+    ActiveSheet.Shapes.AddShape(msoShapeRoundedRectangle, 400, 130, 100, _
+        25).Select
+    Selection.ShapeRange(1).TextFrame2.TextRange.Characters.Text = ChrW(272) & ChrW(7893) & "i tên file"
+        Selection.OnAction = "Rename"
+    ActiveSheet.Shapes.AddShape(msoShapeRoundedRectangle, 400, 160, 100, _
+        25).Select
+    Selection.ShapeRange(1).TextFrame2.TextRange.Characters.Text = "Xoá"
+       Selection.OnAction = "Clear"
+    Range("A1").Select
 End Sub
 Sub Getfile()
     'Tao ten A1:G1
