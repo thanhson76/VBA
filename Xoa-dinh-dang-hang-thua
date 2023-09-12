@@ -14,5 +14,5 @@ Sub XoaDinhDang()
     ' ThisWorkbook.Save
     ' Cap nhat lai bang tinh
     ActiveSheet.UsedRange
-ActiveSheet.used
+
 End Sub
