@@ -1,0 +1,18 @@
+Sub XoaDinhDang()
+    ' Chọn Sheet bạn muốnn làm việc
+    Dim ws As Worksheet
+    Set ws = ThisWorkbook.Sheets("Sheet1")
+    ' Xoá định dạng
+    ' Tìm ô cuối cùng chứa dữ liệu trong cột A
+    Dim lastRow As Long
+    lastRow = ws.Cells(ws.Rows.Count, "A").End(xlUp).Row
+
+    ' Xóa định dạng của các ô sau ô cuối cùng chứa dữ liệu
+    ws.Range("A" & lastRow + 1 & ":A" & ws.Rows.Count).ClearFormats
+
+    ' Lưu bảng tính
+    ' ThisWorkbook.Save
+    ' Cap nhat lai bang tinh
+    ActiveSheet.UsedRange
+ActiveSheet.used
+End Sub
