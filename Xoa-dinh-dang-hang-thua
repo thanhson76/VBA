@@ -1,5 +1,5 @@
 Sub XoaDinhDang()
-    ' Chọn Sheet bạn muốnn làm việc
+    ' Chọn Sheet bạn muốn làm việc
     Dim ws As Worksheet
     Set ws = ThisWorkbook.Sheets("Sheet1")
     ' Xoá định dạng
