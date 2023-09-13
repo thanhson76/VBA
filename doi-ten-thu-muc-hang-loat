@@ -1,0 +1,46 @@
+Sub Macro1()
+
+    Dim objFSO As Object
+    Dim objFolder As Object
+    Dim objSubFolder As Object
+    Dim i As Integer
+    Dim rootFolder As String
+
+    'L?y giá tr? thu m?c g?c t? ô C1
+    rootFolder = Range("C1").Value
+
+    'L?y d?i tu?ng FileSystemObject
+    Set objFSO = CreateObject("Scripting.FileSystemObject")
+    'L?y d?i tu?ng thu m?c g?c
+    Set objFolder = objFSO.GetFolder(rootFolder)
+
+    i = 1
+    'Duy?t qua các thu m?c con
+    For Each objSubFolder In objFolder.SubFolders
+        'Ðua tên thu m?c vào c?t A
+        Cells(i, 1) = objSubFolder.Name
+        i = i + 1
+    Next objSubFolder
+
+'
+End Sub
+Sub Macro2()
+'
+
+    Dim i As Integer
+    Dim rootFolder As String
+
+    'L?y giá tr? thu m?c g?c t? ô C1
+    rootFolder = Range("C1").Value
+
+    'Duy?t qua các dòng trong c?t A và B
+    For i = 1 To 1000
+        If Cells(i, 1) <> "" And Cells(i, 2) <> "" Then
+            'Ð?i tên thu m?c theo giá tr? trong c?t B
+            Name rootFolder & "\" & Cells(i, 1) As rootFolder & "\" & Cells(i, 2)
+        End If
+    Next i
+
+
+'
+End Sub
