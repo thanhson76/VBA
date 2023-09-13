@@ -517,4 +517,17 @@ Sub Tao_bang_khoi_luong()
         .ThemeFont = xlThemeFontNone
         
     End With
+    ' Macro4 tao do rong cot
+'
+
+'
+    Columns("A:A").Select
+    Selection.ColumnWidth = 3.5
+    Columns("B:B").Select
+    Selection.ColumnWidth = 35
+    Columns("D:E").Select
+    Selection.ColumnWidth = 10
+    Columns("B:B").Select
+    Selection.ColumnWidth = 40
+    Selection.ColumnWidth = 35
 End Sub
