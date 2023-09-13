@@ -1,532 +1,116 @@
 Sub Tao_bang_khoi_luong()
-'
-' Macro1,2 Macro tao form bang tinh
 
-'
-    Cells.Select
-    With Selection.Font
-        .Name = "Arial"
-        .Size = 16
-        .Strikethrough = False
-        .Superscript = False
-        .Subscript = False
-        .OutlineFont = False
-        .Shadow = False
-        .Underline = xlUnderlineStyleNone
-        .ThemeColor = xlThemeColorLight1
-        .TintAndShade = 0
-        .ThemeFont = xlThemeFontNone
-    End With
-    With Selection.Font
+    ' XOA TOAN BO BANG TINH
+    If MsgBox("TOAN BO BANG TINH SE BI XOA, BAN CO MUON TIEP TUC?", vbYesNo + vbQuestion, "XAC NHAN XOA") = vbYes Then
+    Cells.Clear
+    End If
+
+    ' DINH DANG BANG TINH
+    ' Dat font cho toàn bo bang
+    With Cells.Font
         .Name = "Arial"
         .Size = 12
-        .Strikethrough = False
-        .Superscript = False
-        .Subscript = False
-        .OutlineFont = False
-        .Shadow = False
-        .Underline = xlUnderlineStyleNone
         .ThemeColor = xlThemeColorLight1
-        .TintAndShade = 0
-        .ThemeFont = xlThemeFontNone
     End With
-    Range("A1").Select
-    ActiveCell.FormulaR1C1 = "B" & ChrW(7842) & "NG KH" & ChrW(7888) & "I L" & ChrW(431) & ChrW(7906) & "NG"
-    Range("A3").Select
-    ActiveCell.FormulaR1C1 = "STT"
-    Range("B3").Select
-    ActiveCell.FormulaR1C1 = "N" & ChrW(7897) & "i dung công vi" & ChrW(7879) & "c"
-    Range("C3").Select
-    ActiveCell.FormulaR1C1 = ChrW(272) & ChrW(417) & "n v" & ChrW(7883)
-    Range("D3").Select
-    ActiveCell.FormulaR1C1 = "Kh" & ChrW(7889) & "i l" & ChrW(432) & ChrW(7907) & "ng"
-    Range("E3").Select
-    ActiveCell.FormulaR1C1 = "Ghi chú"
-    Range("A4").Select
-    Columns("A:A").ColumnWidth = 3.25
-    Columns("B:B").ColumnWidth = 21.5
-    Columns("C:C").ColumnWidth = 6.75
-    Columns("D:D").ColumnWidth = 8.67
-    Range("A3:E3").Select
-    Selection.Font.Bold = True
-    With Selection
-        .HorizontalAlignment = xlCenter
-        .VerticalAlignment = xlBottom
-        .WrapText = False
-        .Orientation = 0
-        .AddIndent = False
-        .IndentLevel = 0
-        .ShrinkToFit = False
-        .ReadingOrder = xlContext
-        .MergeCells = False
-    End With
-    With Selection.Font
-        .Name = "Arial"
-        .Size = 11
-        .Strikethrough = False
-        .Superscript = False
-        .Subscript = False
-        .OutlineFont = False
-        .Shadow = False
-        .Underline = xlUnderlineStyleNone
-        .ThemeColor = xlThemeColorLight1
-        .TintAndShade = 0
-        .ThemeFont = xlThemeFontNone
-    End With
-    With Selection.Interior
-        .Pattern = xlSolid
-        .PatternColorIndex = xlAutomatic
-        .ThemeColor = xlThemeColorDark1
-        .TintAndShade = -0.149998474074526
-        .PatternTintAndShade = 0
-    End With
-    Range("A3:E30").Select
-    Selection.Borders(xlDiagonalDown).LineStyle = xlNone
-    Selection.Borders(xlDiagonalUp).LineStyle = xlNone
-    With Selection.Borders(xlEdgeLeft)
-        .LineStyle = xlContinuous
-        .ColorIndex = 0
-        .TintAndShade = 0
-        .Weight = xlThin
-    End With
-    With Selection.Borders(xlEdgeTop)
-        .LineStyle = xlContinuous
-        .ColorIndex = 0
-        .TintAndShade = 0
-        .Weight = xlThin
-    End With
-    With Selection.Borders(xlEdgeBottom)
-        .LineStyle = xlContinuous
-        .ColorIndex = 0
-        .TintAndShade = 0
-        .Weight = xlThin
-    End With
-    With Selection.Borders(xlEdgeRight)
-        .LineStyle = xlContinuous
-        .ColorIndex = 0
-        .TintAndShade = 0
-        .Weight = xlThin
-    End With
-    With Selection.Borders(xlInsideVertical)
-        .LineStyle = xlContinuous
-        .ColorIndex = 0
-        .TintAndShade = 0
-        .Weight = xlThin
-    End With
-    With Selection.Borders(xlInsideHorizontal)
-        .LineStyle = xlContinuous
-        .ColorIndex = 0
-        .TintAndShade = 0
-        .Weight = xlThin
-    End With
-    Range("A4:E30").Select
-    Selection.Borders(xlDiagonalDown).LineStyle = xlNone
-    Selection.Borders(xlDiagonalUp).LineStyle = xlNone
-    With Selection.Borders(xlEdgeLeft)
-        .LineStyle = xlContinuous
-        .ColorIndex = 0
-        .TintAndShade = 0
-        .Weight = xlThin
-    End With
-    With Selection.Borders(xlEdgeTop)
-        .LineStyle = xlContinuous
-        .ColorIndex = 0
-        .TintAndShade = 0
-        .Weight = xlThin
-    End With
-    With Selection.Borders(xlEdgeBottom)
-        .LineStyle = xlContinuous
-        .ColorIndex = 0
-        .TintAndShade = 0
-        .Weight = xlThin
-    End With
-    With Selection.Borders(xlEdgeRight)
-        .LineStyle = xlContinuous
-        .ColorIndex = 0
-        .TintAndShade = 0
-        .Weight = xlThin
-    End With
-    With Selection.Borders(xlInsideVertical)
-        .LineStyle = xlContinuous
-        .ColorIndex = 0
-        .TintAndShade = 0
-        .Weight = xlThin
-    End With
-    With Selection.Borders(xlInsideHorizontal)
-        .LineStyle = xlContinuous
-        .ColorIndex = 0
-        .TintAndShade = 0
-        .Weight = xlHairline
-    End With
-    Range("A1:E1").Select
-    Selection.Font.Bold = True
-    With Selection.Font
-        .Name = "Arial"
-        .Size = 15
-        .Strikethrough = False
-        .Superscript = False
-        .Subscript = False
-        .OutlineFont = False
-        .Shadow = False
-        .Underline = xlUnderlineStyleNone
-        .ThemeColor = xlThemeColorLight1
-        .TintAndShade = 0
-        .ThemeFont = xlThemeFontNone
-    End With
-    With Selection
+
+    ' Dinh dang cho o A1:E1
+    With Range("A1:E1")
+        .Font.Size = 15
+        .Font.Bold = True
         .HorizontalAlignment = xlCenterAcrossSelection
         .VerticalAlignment = xlBottom
-        .WrapText = False
-        .Orientation = 0
-        .AddIndent = False
-        .IndentLevel = 0
-        .ShrinkToFit = False
         .ReadingOrder = xlContext
-        .MergeCells = False
     End With
-    Rows("2:2").Select
-    Selection.Insert Shift:=xlDown
-    Selection.Insert Shift:=xlDown
-    Range("A2").Select
-    ActiveCell.FormulaR1C1 = "Công trình: "
-    Range("A2").Select
-    With Selection.Font
-        .Name = "Arial"
-        .Size = 12
-        .Strikethrough = False
-        .Superscript = False
-        .Subscript = False
-        .OutlineFont = False
-        .Shadow = False
-        .Underline = xlUnderlineStyleNone
-        .ThemeColor = xlThemeColorLight1
-        .TintAndShade = 0
-        .ThemeFont = xlThemeFontNone
+
+    ' Ð?t chi?u r?ng cho các c?t
+    Columns("A:A").ColumnWidth = 4
+    Columns("B:B").ColumnWidth = 30
+    Columns("C:C").ColumnWidth = 12
+    Columns("D:D").ColumnWidth = 15
+    Columns("D:D").ColumnWidth = 12
+    ' Ð?t do cao cho hàng 5
+    Rows("5:5").RowHeight = 20
+
+    ' Can STT va DV vao giua o
+    With Range("A5:A17")
+    .HorizontalAlignment = xlCenter
+    '.VerticalAlignment = xlCenter 'can theo chieu doc
     End With
-    Rows("3:3").RowHeight = 11.25
-    Range("A6:E32").Select
-    With Selection
-        .HorizontalAlignment = xlCenter
-        .VerticalAlignment = xlBottom
-        .WrapText = False
-        .Orientation = 0
-        .AddIndent = False
-        .IndentLevel = 0
-        .ShrinkToFit = False
-        .ReadingOrder = xlContext
-        .MergeCells = False
+    With Range("C5:C17")
+    .HorizontalAlignment = xlCenter
     End With
-    With Selection
-        .HorizontalAlignment = xlCenter
-        .VerticalAlignment = xlCenter
-        .WrapText = False
-        .Orientation = 0
-        .AddIndent = False
-        .IndentLevel = 0
-        .ShrinkToFit = False
-        .ReadingOrder = xlContext
-        .MergeCells = False
+    
+    ' Dat mau nen, can chu vao giua o
+    With Range("A5:E5")
+    .Interior.Color = RGB(192, 192, 192)
+    .HorizontalAlignment = xlCenter
+    .VerticalAlignment = xlCenter
+    .Font.Bold = True
     End With
-    Range("A6").Select
-    ActiveCell.FormulaR1C1 = "1"
-    Range("A7").Select
-    ActiveCell.FormulaR1C1 = "=IF(RC[2]<>0,COUNTA(R6C3:RC[2]),"""")"
-    Range("A7").Select
-    Selection.Copy
-    Range("A6:A32").Select
-    Selection.PasteSpecial Paste:=xlPasteFormulas, Operation:=xlNone, _
-        SkipBlanks:=False, Transpose:=False
-    Application.CutCopyMode = False
-    Range("B6").Select
-    ActiveCell.FormulaR1C1 = "Cong viec 1"
-    Range("C6").Select
-    ActiveCell.FormulaR1C1 = "m2"
-    Range("B6").Select
-    With Selection
-        .HorizontalAlignment = xlLeft
-        .VerticalAlignment = xlCenter
-        .WrapText = False
-        .Orientation = 0
-        .AddIndent = False
-        .IndentLevel = 0
-        .ShrinkToFit = False
-        .ReadingOrder = xlContext
-        .MergeCells = False
+    
+    ' Dinh dang chu phan dien giai
+    With Range("A6:E17").Font
+    .Italic = True
+    .Color = RGB(0, 0, 255)
     End With
-    Range("B6:B32").Select
-    With Selection
-        .VerticalAlignment = xlCenter
-        .WrapText = True
-        .Orientation = 0
-        .AddIndent = False
-        .IndentLevel = 0
-        .ShrinkToFit = False
-        .ReadingOrder = xlContext
-        .MergeCells = False
+    Rows("6:6").ClearFormats
+    Rows("10:10").ClearFormats
+    Rows("14:14").ClearFormats
+   
+        
+    ' Ð?t vi?n cho b?ng
+    Dim tableRange As Range
+    Set tableRange = Range("A5:E17")
+    With tableRange.Borders
+        .LineStyle = xlContinuous
+        .Weight = xlThin
+        .ColorIndex = xlAutomatic
     End With
-        Range("B7").Select
-    ActiveCell.FormulaR1C1 = "Dien giai 1"
-    Range("B6:B32").Select
-    With Selection
-        .HorizontalAlignment = xlGeneral
-        .VerticalAlignment = xlCenter
-        .WrapText = True
-        .Orientation = 0
-        .AddIndent = False
-        .IndentLevel = 0
-        .ShrinkToFit = False
-        .ReadingOrder = xlContext
-        .MergeCells = False
-    End With
-    With Selection
-        .HorizontalAlignment = xlLeft
-        .VerticalAlignment = xlCenter
-        .WrapText = True
-        .Orientation = 0
-        .AddIndent = False
-        .IndentLevel = 0
-        .ShrinkToFit = False
-        .ReadingOrder = xlContext
-        .MergeCells = False
-    End With
-    With Selection
-        .HorizontalAlignment = xlGeneral
-        .VerticalAlignment = xlCenter
-        .WrapText = True
-        .Orientation = 0
-        .AddIndent = False
-        .IndentLevel = 0
-        .ShrinkToFit = False
-        .ReadingOrder = xlContext
-        .MergeCells = False
-    End With
-    Range("A7:E11").Select
-    With Selection.Font
-        .ThemeColor = xlThemeColorAccent1
-        .TintAndShade = -0.499984740745262
-    End With
-    With Selection.Font
-        .ThemeColor = xlThemeColorAccent2
-        .TintAndShade = 0
-    End With
-    Selection.Font.Italic = True
-    Range("D7").Select
-    Application.CutCopyMode = False
-    ActiveCell.Formula2R1C1 = "=DVDEvaluate(RC[-2])"
-    Range("B9").Select
-    ActiveWindow.SmallScroll Down:=0
+    
+    ' Add filter
+    tableRange.AutoFilter
+    
+    ' Co dinh hang 5 view
     Rows("6:6").Select
     ActiveWindow.FreezePanes = True
-    Range("D13").Select
-    ActiveWindow.SmallScroll Down:=0
-    Range("A5").Select
-    Range(Selection, Selection.End(xlDown)).Select
-    Range(Selection, ActiveCell.SpecialCells(xlLastCell)).Select
-    Selection.AutoFilter
-    Range("D13").Select
-    ActiveWindow.SmallScroll Down:=0
-    ' Macro2 Macro
-'
-    Range("B7:D7").Select
-    Selection.Copy
-    Range("B8:B9").Select
-    ActiveSheet.Paste
-    Application.CutCopyMode = False
-    Range("A6:E9").Select
-    Selection.Copy
-    Range("A10").Select
-    ActiveSheet.Paste
-    Range("A14").Select
-    ActiveSheet.Paste
-    Application.CutCopyMode = False
-    Range("A6:E32").Select
-    Selection.Borders(xlDiagonalDown).LineStyle = xlNone
-    Selection.Borders(xlDiagonalUp).LineStyle = xlNone
-    With Selection.Borders(xlEdgeLeft)
-        .LineStyle = xlContinuous
-        .ColorIndex = 0
-        .TintAndShade = 0
-        .Weight = xlThin
-    End With
-    With Selection.Borders(xlEdgeTop)
-        .LineStyle = xlContinuous
-        .ColorIndex = 0
-        .TintAndShade = 0
-        .Weight = xlThin
-    End With
-    With Selection.Borders(xlEdgeBottom)
-        .LineStyle = xlContinuous
-        .ColorIndex = 0
-        .TintAndShade = 0
-        .Weight = xlThin
-    End With
-    With Selection.Borders(xlEdgeRight)
-        .LineStyle = xlContinuous
-        .ColorIndex = 0
-        .TintAndShade = 0
-        .Weight = xlThin
-    End With
-    With Selection.Borders(xlInsideVertical)
-        .LineStyle = xlContinuous
-        .ColorIndex = 0
-        .TintAndShade = 0
-        .Weight = xlThin
-    End With
-    With Selection.Borders(xlInsideHorizontal)
-        .LineStyle = xlContinuous
-        .ColorIndex = 0
-        .TintAndShade = 0
-        .Weight = xlHairline
-    End With
-    Range("D6").Select
-    Application.CutCopyMode = False
-    ActiveCell.FormulaR1C1 = "=SUM(R[1]C:R[3]C)"
-    Range("D10").Select
-    Application.CutCopyMode = False
-    ActiveCell.FormulaR1C1 = "=SUM(R[1]C:R[3]C)"
-    Range("D10").Select
-    Selection.Copy
-    Range("D14").Select
-    Selection.PasteSpecial Paste:=xlPasteFormulas, Operation:=xlNone, _
-        SkipBlanks:=False, Transpose:=False
-    Application.CutCopyMode = False
     
+    ' DAT GIA TRI CHO CAC O
+    Range("A1:E17").ClearContents
     
-        ' Macro3 Tao in an
-        Application.PrintCommunication = False
+    ' Thêm tiêu d? c?t
+    Cells(1, 1).Value = "B" & ChrW(7842) & "NG KH" & ChrW(7888) & "I L" & ChrW(431) & ChrW(7906) & "NG"
+    Cells(5, 1).Value = "STT"
+    Cells(5, 2).Value = "N" & ChrW(7897) & "i dung công vi" & ChrW(7879) & "c"
+    Cells(5, 3).Value = ChrW(272) & ChrW(417) & "n v" & ChrW(7883)
+    Cells(5, 4).Value = "Kh" & ChrW(7889) & "i l" & ChrW(432) & ChrW(7907) & "ng"
+    Cells(5, 5).Value = "Ghi chú"
+
+    Cells(6, 2).Value = "Cong viec 1"
+    Cells(10, 2).Value = "Cong viec 2"
+    Cells(14, 2).Value = "Cong viec 3"
+    Cells(6, 3).Value = "m2"
+    Cells(10, 3).Value = "m2"
+    Cells(14, 3).Value = "m2"
+    
+    ' T?o các công th?c
+    Cells(7, 1).FormulaR1C1 = "=IF(RC[2]<>0,COUNTA(R6C3:RC[2]),"""")"
+    Cells(6, 4).FormulaR1C1 = "=SUM(R[1]C:R[3]C)"
+    Cells(10, 4).FormulaR1C1 = "=SUM(R[1]C:R[3]C)"
+    Cells(14, 4).FormulaR1C1 = "=SUM(R[1]C:R[3]C)"
+    
+    ' Copy cong thuc tu o A7 den A6:A17
+    Range("A7").Copy Range("A6:A17")
+
+
+    ' CAI DAT IN AN
     With ActiveSheet.PageSetup
-        .PrintTitleRows = ""
-        .PrintTitleColumns = ""
+    .PrintTitleRows = "$5:$5" ' Dat hang 5 thanh Print Titles
+    .TopMargin = Application.CentimetersToPoints(1.5)
+    .RightMargin = Application.CentimetersToPoints(1.5)
+    .BottomMargin = Application.CentimetersToPoints(1.5)
+    .LeftMargin = Application.CentimetersToPoints(3)
+    .CenterHorizontally = True
     End With
-    Application.PrintCommunication = True
-    ActiveSheet.PageSetup.PrintArea = ""
-    Application.PrintCommunication = False
-    With ActiveSheet.PageSetup
-        .LeftHeader = ""
-        .CenterHeader = ""
-        .RightHeader = ""
-        .LeftFooter = ""
-        .CenterFooter = ""
-        .RightFooter = ""
-        .LeftMargin = Application.InchesToPoints(0.78740157480315)
-        .RightMargin = Application.InchesToPoints(0.590551181102362)
-        .TopMargin = Application.InchesToPoints(0.590551181102362)
-        .BottomMargin = Application.InchesToPoints(0.590551181102362)
-        .HeaderMargin = Application.InchesToPoints(0.31496062992126)
-        .FooterMargin = Application.InchesToPoints(0.31496062992126)
-        .PrintHeadings = False
-        .PrintGridlines = False
-        .PrintComments = xlPrintNoComments
-        .PrintQuality = 600
-        .CenterHorizontally = True
-        .CenterVertically = False
-        .Orientation = xlPortrait
-        .Draft = False
-        .PaperSize = xlPaperA4
-        .FirstPageNumber = xlAutomatic
-        .Order = xlDownThenOver
-        .BlackAndWhite = False
-        .Zoom = 100
-        .PrintErrors = xlPrintErrorsDisplayed
-        .OddAndEvenPagesHeaderFooter = False
-        .DifferentFirstPageHeaderFooter = False
-        .ScaleWithDocHeaderFooter = True
-        .AlignMarginsHeaderFooter = True
-        .EvenPage.LeftHeader.Text = ""
-        .EvenPage.CenterHeader.Text = ""
-        .EvenPage.RightHeader.Text = ""
-        .EvenPage.LeftFooter.Text = ""
-        .EvenPage.CenterFooter.Text = ""
-        .EvenPage.RightFooter.Text = ""
-        .FirstPage.LeftHeader.Text = ""
-        .FirstPage.CenterHeader.Text = ""
-        .FirstPage.RightHeader.Text = ""
-        .FirstPage.LeftFooter.Text = ""
-        .FirstPage.CenterFooter.Text = ""
-        .FirstPage.RightFooter.Text = ""
-    End With
-    Application.PrintCommunication = True
-    ActiveWindow.SmallScroll Down:=0
-    Application.CutCopyMode = False
-    Application.PrintCommunication = False
-    With ActiveSheet.PageSetup
-        .PrintTitleRows = "$5:$5"
-        .PrintTitleColumns = ""
-    End With
-    Application.PrintCommunication = True
-    ActiveSheet.PageSetup.PrintArea = ""
-    Application.PrintCommunication = False
-    With ActiveSheet.PageSetup
-        .LeftHeader = ""
-        .CenterHeader = ""
-        .RightHeader = ""
-        .LeftFooter = ""
-        .CenterFooter = ""
-        .RightFooter = ""
-        .LeftMargin = Application.InchesToPoints(0.78740157480315)
-        .RightMargin = Application.InchesToPoints(0.590551181102362)
-        .TopMargin = Application.InchesToPoints(0.590551181102362)
-        .BottomMargin = Application.InchesToPoints(0.590551181102362)
-        .HeaderMargin = Application.InchesToPoints(0.31496062992126)
-        .FooterMargin = Application.InchesToPoints(0.31496062992126)
-        .PrintHeadings = False
-        .PrintGridlines = False
-        .PrintComments = xlPrintNoComments
-        .PrintQuality = 600
-        .CenterHorizontally = True
-        .CenterVertically = False
-        .Orientation = xlPortrait
-        .Draft = False
-        .PaperSize = xlPaperA4
-        .FirstPageNumber = xlAutomatic
-        .Order = xlDownThenOver
-        .BlackAndWhite = False
-        .Zoom = 100
-        .PrintErrors = xlPrintErrorsDisplayed
-        .OddAndEvenPagesHeaderFooter = False
-        .DifferentFirstPageHeaderFooter = False
-        .ScaleWithDocHeaderFooter = True
-        .AlignMarginsHeaderFooter = True
-        .EvenPage.LeftHeader.Text = ""
-        .EvenPage.CenterHeader.Text = ""
-        .EvenPage.RightHeader.Text = ""
-        .EvenPage.LeftFooter.Text = ""
-        .EvenPage.CenterFooter.Text = ""
-        .EvenPage.RightFooter.Text = ""
-        .FirstPage.LeftHeader.Text = ""
-        .FirstPage.CenterHeader.Text = ""
-        .FirstPage.RightHeader.Text = ""
-        .FirstPage.LeftFooter.Text = ""
-        .FirstPage.CenterFooter.Text = ""
-        .FirstPage.RightFooter.Text = ""
-    End With
-    Application.PrintCommunication = True
-    ActiveWindow.SmallScroll Down:=0
-    Columns("G:G").Select
-    With Selection.Font
-        .Name = "Arial"
-        .Size = 14
-        .Strikethrough = False
-        .Superscript = False
-        .Subscript = False
-        .OutlineFont = False
-        .Shadow = False
-        .Underline = xlUnderlineStyleNone
-        .ThemeColor = xlThemeColorLight1
-        .TintAndShade = 0
-        .ThemeFont = xlThemeFontNone
-        
-    End With
-    ' Macro4 tao do rong cot
-'
-    Columns("A:A").Select
-    Selection.ColumnWidth = 3.5
-    Columns("B:B").Select
-    Selection.ColumnWidth = 50
-    Columns("D:E").Select
-    Selection.ColumnWidth = 10
-    Columns("B:B").Select
-    Selection.ColumnWidth = 40
-    Selection.ColumnWidth = 35
-    Range("A1").Select
+
+    
 End Sub
