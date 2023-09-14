@@ -1,9 +1,24 @@
+Sub Callback(RibbonControl As IRibbonControl)
+Tao_bang_khoi_luong
+End Sub
+
 Sub Tao_bang_khoi_luong()
 
-    ' XOA TOAN BO BANG TINH
-    If MsgBox("TOAN BO BANG TINH SE BI XOA, BAN CO MUON TIEP TUC?", vbYesNo + vbQuestion, "XAC NHAN XOA") = vbYes Then
-    Cells.Clear
-    End If
+'   XOA TOAN BO BANG TINH
+'    If MsgBox("XOÁ?", vbYesNo + vbQuestion, "XAC NHAN XOA") = vbYes Then
+'    Cells.Clear
+'    End If
+
+'Select Case CreateObject("WScript.Shell").Popup("XOA KHONG", , "XOA", 4 + 32)
+'    Case vbYes
+'        Cells.Clear
+'    Case vbNo
+'        ' Không làm gì c?
+'End Select
+
+    Select Case CreateObject("WScript.Shell").Popup("To" & ChrW(224) & "n b" & ChrW(7897) & " b" & ChrW(7843) & "ng t" & ChrW(237) & "nh x" & ChrW(7869) & " b" & ChrW(7883) & " XO" & ChrW(193) & ", b" & ChrW(7841) & "n c" & ChrW(243) & " mu" & ChrW(7889) & "n ti" & ChrW(7871) & "p t" & ChrW(7909) & "c?", , "X" & ChrW(225) & "c nh" & ChrW(7853) & "n xo" & ChrW(225), 1 + 64)
+        Case vbOK
+            Cells.Clear
 
     ' DINH DANG BANG TINH
     ' Dat font cho toàn bo bang
@@ -25,20 +40,11 @@ Sub Tao_bang_khoi_luong()
     ' Ð?t chi?u r?ng cho các c?t
     Columns("A:A").ColumnWidth = 4
     Columns("B:B").ColumnWidth = 30
-    Columns("C:C").ColumnWidth = 12
+    Columns("C:C").ColumnWidth = 9
     Columns("D:D").ColumnWidth = 15
     Columns("D:D").ColumnWidth = 12
     ' Ð?t do cao cho hàng 5
     Rows("5:5").RowHeight = 20
-
-    ' Can STT va DV vao giua o
-    With Range("A5:A17")
-    .HorizontalAlignment = xlCenter
-    '.VerticalAlignment = xlCenter 'can theo chieu doc
-    End With
-    With Range("C5:C17")
-    .HorizontalAlignment = xlCenter
-    End With
     
     ' Dat mau nen, can chu vao giua o
     With Range("A5:E5")
@@ -57,6 +63,15 @@ Sub Tao_bang_khoi_luong()
     Rows("10:10").ClearFormats
     Rows("14:14").ClearFormats
    
+    ' Can STT va DV vao giua o
+    With Range("A5:A17")
+    .HorizontalAlignment = xlCenter
+    .VerticalAlignment = xlCenter 'can theo chieu doc
+    End With
+    With Range("C5:C17")
+    .HorizontalAlignment = xlCenter
+    .VerticalAlignment = xlCenter 'can theo chieu doc
+    End With
         
     ' Ð?t vi?n cho b?ng
     Dim tableRange As Range
@@ -75,7 +90,7 @@ Sub Tao_bang_khoi_luong()
     ActiveWindow.FreezePanes = True
     
     ' DAT GIA TRI CHO CAC O
-    Range("A1:E17").ClearContents
+    ' Range("A1:E17").ClearContents
     
     ' Thêm tiêu d? c?t
     Cells(1, 1).Value = "B" & ChrW(7842) & "NG KH" & ChrW(7888) & "I L" & ChrW(431) & ChrW(7906) & "NG"
@@ -85,9 +100,9 @@ Sub Tao_bang_khoi_luong()
     Cells(5, 4).Value = "Kh" & ChrW(7889) & "i l" & ChrW(432) & ChrW(7907) & "ng"
     Cells(5, 5).Value = "Ghi chú"
 
-    Cells(6, 2).Value = "Cong viec 1"
-    Cells(10, 2).Value = "Cong viec 2"
-    Cells(14, 2).Value = "Cong viec 3"
+    Cells(6, 2).Value = "C" & ChrW(244) & "ng vi" & ChrW(7879) & "c 1"
+    Cells(10, 2).Value = "C" & ChrW(244) & "ng vi" & ChrW(7879) & "c 2"
+    Cells(14, 2).Value = "C" & ChrW(244) & "ng vi" & ChrW(7879) & "c 3"
     Cells(6, 3).Value = "m2"
     Cells(10, 3).Value = "m2"
     Cells(14, 3).Value = "m2"
@@ -99,8 +114,9 @@ Sub Tao_bang_khoi_luong()
     Cells(14, 4).FormulaR1C1 = "=SUM(R[1]C:R[3]C)"
     
     ' Copy cong thuc tu o A7 den A6:A17
-    Range("A7").Copy Range("A6:A17")
-
+    Range("A7").Copy
+    Range("A6:A17").PasteSpecial Paste:=xlPasteFormulas
+    Application.CutCopyMode = False
 
     ' CAI DAT IN AN
     With ActiveSheet.PageSetup
@@ -112,5 +128,9 @@ Sub Tao_bang_khoi_luong()
     .CenterHorizontally = True
     End With
 
-    
+    Range("A1").Select
+    Case vbCancel
+    ' Không làm gì ca
+    End Select
 End Sub
+
