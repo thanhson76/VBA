@@ -1,0 +1,26 @@
+' Sưu tầm GPE. Chọn vùng Copy, chọn Vùng Paste chứa hàng ẩn, sẽ Paste bỏ qua các hàng ẩn.
+Sub Paste_to_Visible_Rows()
+Dim Nguon As Range, Dich As Range
+Dim i As Long, r As Long
+Dim MsgB As String
+
+On Error GoTo LoiCT
+1 Set Nguon = Application.InputBox(prompt:="Chon Vung Copy ", Type:=8)
+2 Set Dich = Application.InputBox(prompt:="Chep Den: (Luu Y: Chi Chon 1 O Dau Tien Cua Vung Can Dan)", Type:=8)
+3 For i = 1 To Nguon.Rows.Count
+    Do Until Not Dich.Offset(r).Rows.Hidden
+        r = r + 1
+    Loop
+    Nguon.Rows(i).Copy Destination:=Dich.Offset(r)
+    r = r + 1
+Next i
+Err_:           Exit Sub
+LoiCT:
+If Err = 424 Then
+    MsgB = Choose(Erl, "Vung Copy", "Vung Dan", "HOANGTUAN.NET")
+    MsgBox "Can Chon  " & MsgB, , "XIN LUU Y!"
+    Resume Err_
+Else
+    On Error Resume Next
+End If
+End Sub
