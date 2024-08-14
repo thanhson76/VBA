@@ -1,3 +1,3 @@
 # Tu-hoc-VBA
-Các bạn cùng học VBA  với mình nhé
+https://www.youtube.com/@BuilderTV/
 @Builder TV
